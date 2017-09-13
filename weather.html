@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+<meta charset="utf-8">
+  <title>Weather</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<img class="background" src="https://source.unsplash.com/random">
+
+<div class="weather">
+    <input type="text" id="cityname">
+    <button type="button" id="submit">Check Here</button>
+  <h2 id="city">City</h2>
+  <p id="country">Country</p>
+  <h1><span id="temp"></span><sup>0</sup>C</h1>
+  <a class="twitter-share-button" data-size="large"><img class="tweet" src="img/Tweet.png"></a>
+</div>
+
+
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+       $("#submit").click(function(){
+        var city=$("#cityname").val();
+        $.ajax({
+        url:"https://api.apixu.com/v1/current.json?key=0334ce1047aa4a9da2b171105171209&q="+city,
+
+        dataType:"json",
+        success:function(data){
+
+          $("#city").text(data.location.name);
+          $("#country").text(data.location.country);
+          $("#temp").text(data.current.temp_c);
+
+          console.log(data.current.temp_c);
+          console.log(data.location.name);
+          console.log(data.location.country);
+
+          var details= "City Name :" +data.location.name+ " Country :" +data.location.country+ " Temperature:" +data.current.temp_c;
+
+          $(".twitter-share-button").attr("href","https://twitter.com/intent/tweet?text="+details)
+
+        },
+        error:function(){
+          $("#city").text("Inter valid city name")    
+        }
+        
+      });
+
+       });
+    });
+
+
+
+  </script>
+
+</body>
+</html>
